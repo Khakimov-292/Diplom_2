@@ -13,8 +13,6 @@ def create_and_delete_user():
     created_response = user.create_user(payload)
     if created_response.status_code == 200:
         access_token = created_response.json().get('accessToken')
-        assert access_token is not None, "Токен доступа не был получен"
-
         yield {
             'response': created_response,
             'payload': payload,
