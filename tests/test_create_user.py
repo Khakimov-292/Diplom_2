@@ -30,12 +30,6 @@ class TestCreateUser:
     @pytest.mark.parametrize("missing_field", ["email", "password", "name"])
     def test_create_user_with_missing_field(self, missing_field):
         payload = create_user_data_without_password()
-        if missing_field == "email":
-            payload["email"] = ""
-        elif missing_field == "password":
-            payload["password"] = ""
-        elif missing_field == "name":
-            payload["name"] = ""
         response = user.create_user(payload)
         expected_response = {
             "success": False,
