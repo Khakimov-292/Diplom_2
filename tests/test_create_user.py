@@ -26,16 +26,11 @@ class TestCreateUser:
         }, f'Фактический результат: {duplicate_response.status_code}, {duplicate_response.json()}'
 
     @allure.title("Создание пользователя без указания обязательного поля")
-    @allure.description("Проверка, что API возвращает ошибку при отсутствии обязательного поля")
-    @pytest.mark.parametrize("missing_field", ["email", "password", "name"])
-    def test_create_user_with_missing_field(self, missing_field):
+    def test_create_user_with_missing_field(self):
         payload = create_user_data_without_password()
         response = user.create_user(payload)
         expected_response = {
             "success": False,
             "message": "Email, password and name are required fields"
         }
-        assert response.status_code == 403 and response.json() == expected_response, (
-            f"Ошибка: {missing_field.capitalize()} не был обработан должным образом. "
-            f'Фактический результат: {response.status_code}, {response.json()}'
-        )
+        assert response.status_code == 403 and response.json() == expected_response
